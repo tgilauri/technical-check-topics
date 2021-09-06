@@ -1,19 +1,18 @@
 /*
-* This is a set of JS tasks to check basic core JS topics:
-* Object, Prototype, Closure, Context, Inheritance
-*
-* Main point is to give a complex task that allows to check many skills
-* */
-
+ * This is a set of JS tasks to check basic core JS topics:
+ * Object, Prototype, Closure, Context, Inheritance
+ *
+ * Main point is to give a complex task that allows to check many skills
+ * */
 
 /*
-* Task 1 Inheritance
-* Implement functional classes inheritance.
-*
-* https://developer.mozilla.org/ru/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
-* https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/create
-* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
-* */
+ * Task 1 Inheritance
+ * Implement functional classes inheritance.
+ *
+ * https://developer.mozilla.org/ru/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
+ * https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+ * */
 
 /**
  * Parent class Shape
@@ -33,7 +32,7 @@ function Shape(height, width) {
  * */
 Shape.prototype.getSquare = function () {
   throw new Error('You have to overload this method in child objects.');
-}
+};
 
 /**
  * Subclass Rectangle
@@ -56,15 +55,15 @@ Rectangle.prototype.constructor = Rectangle;
 
 Rectangle.prototype.getSquare = function () {
   return this.height * this.width;
-}
+};
 
 new Rectangle(1, 2).getSquare(); // 2
 
 /*
-* Task 2 Closure
-* Implement logger with different type of log level
-*
-* */
+ * Task 2 Closure
+ * Implement logger with different type of log level
+ *
+ * */
 
 /**
  * @param {'log' | 'warn' | 'error'} logLevel
@@ -76,14 +75,13 @@ const GetLogger = (logLevel) => {
   if (logLevel in console) {
     return (...args) => {
       console[logLevel](...args);
-    }
+    };
   }
   throw new Error('No such log level in parent logger');
-}
+};
 
 const baseLogger = GetLogger('log');
 baseLogger('Log with log level LOG');
 
 const errorLogger = GetLogger('error');
 errorLogger('Log with log level ERROR');
-

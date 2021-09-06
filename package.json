@@ -1,0 +1,15 @@
+{
+  "name": "tech-check-topics",
+  "version": "1.0.0",
+  "description": "This project contains different tasks that allows to cover tech check topics for Node.js competency",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "prettier --write ./tasks"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^2.3.2"
+  }
+}
