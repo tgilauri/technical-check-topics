@@ -16,3 +16,5 @@ Check the cache for the requested file.
    Then have it load  the file contents before returning its exports
    object.
 
+## Caveats
+* Require not working with .mjs
