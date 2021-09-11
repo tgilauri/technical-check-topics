@@ -18,3 +18,7 @@ Check the cache for the requested file.
 
 ## Caveats
 * Require not working with .mjs
+
+## Links
+* https://exploringjs.com/es6/ch_modules.html
+
