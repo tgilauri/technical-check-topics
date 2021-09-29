@@ -1,3 +1,6 @@
+const Z = 10;
+export {Z};
+
 export const B = 1;
 
 // during the import class is named by exported name. Here is going to be named as default
@@ -36,3 +39,5 @@ class StaticCounterClass {
 }
 
 export const ClassWithStaticCounter = new StaticCounterClass();
+
+

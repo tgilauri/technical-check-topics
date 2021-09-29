@@ -42,13 +42,6 @@ console.log(ExportedNamedClass.prototype.constructor.name); // NamedClass
 
 console.groupEnd();
 
-// How to import default along with named import
-
-import {default as NamedInHere, NamedExportToBeImportedAlongsideDefault} from './module-B.mjs';
-import DefaultAlongWithNamed, {NamedExportToBeImportedAlongsideDefault as ImportedAlongTheDefault} from './module-b.mjs';
-
-console.log();
-
 // Single instance class export
 console.group('Single instance class export');
 
@@ -86,4 +79,8 @@ Instance3.showInstanceCounter(); // 3
 console.groupEnd();
 
 console.groupEnd();
+
+console.log('Z: ', Z)
+
+import { Z } from './module-B.mjs'
 
