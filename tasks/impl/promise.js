@@ -1,3 +1,5 @@
+const { EventEmitter } = require('events');
+
 const FULFILLED = 'fulfilled';
 const REJECTED = 'rejected';
 
@@ -19,69 +21,47 @@ class Promize extends EventEmitter {
         this.value = data;
         this.runThenCb();
       });
-      this.parent.on(REJECTED, (error) => {
-        this.value = error;
-        this.runCatchCb();
-      });
     }
   }
 
   res(value) {
     this.state = FULFILLED;
     this.value = value;
-    this.emit(FULFILLED);
+    this.runThenCb();
   }
 
-  rej() {
+  rej(error) {
     this.state = REJECTED;
-    this.emit(REJECTED);
+    this.value = error;
+    this.runCatchCb();
   }
 
   then(cb) {
     this.thenCb.push(cb);
-    if (this.state !== FULFILLED) {
-      this.on(FULFILLED, () => this.runThenCb());
-    } else {
-      this.runThenCb();
-    }
   }
 
   catch(cb) {
     this.catchCb.push(cb);
-    if (this.state !== REJECTED) {
-      this.on(REJECTED, () => this.runCatchCb());
-    } else {
-      this.runCatchCb();
-    }
   }
 
   runThenCb() {
-    for (const key in this.thenCb) {
+    while (this.thenCb.length > 0) {
       const cb = this.thenCb.shift();
-      try {
-        const nextPromise = new Promize(null, this);
-        this.value = cb(this.value);
-      } catch (e) {
-        this.value = e;
-        return this;
-      }
+      this.value = cb(this.value);
     }
   }
 
   runCatchCb() {
     for (const key in this.catchCb) {
       const cb = this.catchCb.shift();
-      try {
-        this.value = cb(this.value);
-        return this;
-      } catch (e) {
-        this.value = e;
-        return this;
-      }
+      this.value = cb(this.value);
     }
   }
 }
 
-const promise = new Promize((res, rej) => {
+const promise = new Promize((res) => {
   setTimeout(res, 2000);
 });
+
+promise.then(() => console.log('resolved'));
+promise.then(() => console.log('resolved second time'));
