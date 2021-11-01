@@ -85,14 +85,19 @@ const parseParentheses = (str) => {
 };
 
 const calculate = (str) => {
-  if (!str?.length) {
+  if (!str) {
     throw 'You must provide string for calculation';
   }
   if (typeof str !== 'string') {
     throw 'Provided value not a string';
   }
+  if (!str.length) {
+    throw 'You must provide non-empty string';
+  }
 
   return parseCalcString(parseParentheses(str));
 };
+
+calculate('');
 
 console.log(calculate('(1 + (2 + 1)) + (13 / 4) / 2 / 8 * 5 / 4 + 1 * 9'));
