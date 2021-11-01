@@ -98,6 +98,4 @@ const calculate = (str) => {
   return parseCalcString(parseParentheses(str));
 };
 
-calculate('');
-
 console.log(calculate('(1 + (2 + 1)) + (13 / 4) / 2 / 8 * 5 / 4 + 1 * 9'));
