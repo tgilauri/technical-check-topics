@@ -1,13 +1,14 @@
 .window {
-    width: 400px;
-    height: 400px;
     position: absolute;
-    top: 100px;
-    left: 100px;
     background-color: #999;
     border-radius: 4px;
     min-height: 70px !important;
     min-width: 40px !important;
+}
+
+.wrapper {
+    position: relative;
+    height: 100%;
 }
 
 .header {
