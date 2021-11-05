@@ -23,9 +23,9 @@ const mapping = {
 };
 
 const operatorsReg = `[+/*-]`;
-const numbersReg = `\\s?\\d+(?:\.\\d+)?\\s?`;
+const numbersReg = `\\s*\\d+(?:\.\\d+)?\\s*`;
 const operatorsRegEx = new RegExp(`${operatorsReg}`, 'g');
-const parenthesesRegEx = new RegExp(`(\\(([^()]+)\\))`);
+const parenthesesRegEx = new RegExp(`(\\(([^()]+)\\))`, 'g');
 const getOperationRegEx = (operator) => new RegExp(`(${numbersReg}[${operator}]${numbersReg})`);
 
 const prepareNumber = (number) => {
@@ -61,7 +61,7 @@ const parseCalcString = (str) => {
       return result;
     }
     const operation = operationMatch.shift();
-    const fn = parseString(operation);
+    const fn = parseString(operation.trim());
     const operationResult = prepareNumber(fn());
     result = result.replace(getOperationRegEx(operator), operationResult);
   }
