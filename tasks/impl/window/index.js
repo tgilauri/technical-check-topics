@@ -1,9 +1,20 @@
 const main = () => {
-  const myWindow = document.querySelector('#window');
-  const header = document.querySelector('#header');
-  const dragRight = document.querySelector('#dragRight');
-  const dragBottom = document.querySelector('#dragBottom');
-  const dragSE = document.querySelector('#dragSE');
+  const myWindow = document.getElementById('window');
+  const header = document.getElementById('header');
+  const dragRight = document.getElementById('dragRight');
+  const dragBottom = document.getElementById('dragBottom');
+  const dragSE = document.getElementById('dragSE');
+
+  console.log(header);
+
+  let fullScreen = false;
+
+  let dragRightClicked = false;
+  let dragBottomClicked = false;
+
+  let clickedDown = false;
+  let clickedOffsetX = 0;
+  let clickedOffsetY = 0;
 
   const DEFAULT_SIZE = 400;
 
@@ -17,11 +28,33 @@ const main = () => {
     height: DEFAULT_SIZE,
   };
 
-  const resizeWindow = () => {
-    let dragRightClicked = false;
-    let dragBottomClicked = false;
+  const fullScreenResize = () => {
+    header.addEventListener('dblclick', (_) => {
+      fullScreen = !fullScreen;
+      myWindow.dispatchEvent(new Event('fullscreen'));
+    });
 
+    myWindow.addEventListener('fullscreen', (event) => {
+      console.log(event);
+      console.log(size);
+      console.log('fullscreen', fullScreen);
+      if (fullScreen) {
+        myWindow.style.width = `${window.innerWidth}px`;
+        myWindow.style.height = `${window.innerHeight}px`;
+        myWindow.style.top = 0;
+        myWindow.style.left = 0;
+      } else {
+        myWindow.style.width = `${size.width}px`;
+        myWindow.style.height = `${size.height}px`;
+        myWindow.style.top = `${position.top}px`;
+        myWindow.style.left = `${position.left}px`;
+      }
+    });
+  };
+
+  const resizeWindow = () => {
     const onMousemove = (event) => {
+      if (fullScreen) return;
       if (!dragRightClicked && !dragBottomClicked) return;
       if (dragRightClicked) {
         let width = event.clientX - myWindow.offsetLeft;
@@ -41,12 +74,15 @@ const main = () => {
     };
 
     dragRight.addEventListener('mousedown', () => {
+      if (fullScreen) return;
       dragRightClicked = true;
     });
     dragBottom.addEventListener('mousedown', () => {
+      if (fullScreen) return;
       dragBottomClicked = true;
     });
     dragSE.addEventListener('mousedown', () => {
+      if (fullScreen) return;
       dragRightClicked = true;
       dragBottomClicked = true;
     });
@@ -71,12 +107,8 @@ const main = () => {
   };
 
   const moveWindow = () => {
-    let clickedDown = false;
-    let clickedOffsetX = 0;
-    let clickedOffsetY = 0;
-
     const handleMouseMove = (event) => {
-      if (!clickedDown) return;
+      if (!clickedDown || fullScreen) return;
 
       const { clientX, clientY } = event;
 
@@ -108,6 +140,7 @@ const main = () => {
     });
 
     header.addEventListener('mousedown', (e) => {
+      if (fullScreen) return;
       clickedDown = true;
       clickedOffsetX = e.offsetX;
       clickedOffsetY = e.offsetY;
@@ -128,6 +161,7 @@ const main = () => {
 
   moveWindow();
   resizeWindow();
+  fullScreenResize();
 };
 
 document.addEventListener('DOMContentLoaded', main);
